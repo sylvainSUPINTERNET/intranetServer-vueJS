@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "./node_modules/.bin/nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +15,9 @@
     "colors": "^1.1.2",
     "express": "^4.16.2",
     "mongoose": "^4.12.5",
+    "nodemon": "^1.12.1"
+  },
+  "devDependencies": {
     "nodemon": "^1.12.1"
   }
 }
