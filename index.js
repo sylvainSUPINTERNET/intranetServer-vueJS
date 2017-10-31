@@ -29,12 +29,23 @@ const app = express();
 
 const mongoose = require('mongoose');
 
+const CollaborateurCtrl = require('./Collaborateur.controller');
 
 
-
-app.get('/', function(req,res){
-    res.send('Hello world')
+app.get('/collaborateurs', function(req,res){
+    CollaborateurCtrl.findAll(req,res);
 });
+
+app.get('/collaborateur/:id', function (req,res) {
+    CollaborateurCtrl.findOne(req,res);
+});
+
+
+// ou
+/*
+ app.get('/collaborateurs', CollbaorateurCtrl.findAll)
+ */
+
 
 
 
@@ -46,14 +57,14 @@ app.set('db_name', 'intranet');
 
 // demare la db au dermarage du server
 //indique a mongoose qu'on utilise les promesses à utiliser sont celle par défaut dans Node.js(objet global)
-mongoose.Promise = global.Promise
+mongoose.Promise = global.Promise //permet les operations chainée (.exec puis .then);
 
 // Transformation de la méthode app.listen() d'Express en "Promesse JS"
 const appListen = (app, port, ip) => {
     return new Promise((resolve, reject) => {
         app.listen(port, ip, resolve)
     })
-}
+};
 
 // Connexion à la base de données MONGO,
 
