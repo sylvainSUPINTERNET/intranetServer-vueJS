@@ -11,6 +11,8 @@
 require('colors'); //permet d'équiper le type String de toutes plein de méthode (qui permet le display de color)
 
 const util = require('util');
+const bodyParser = require('body-parser');
+
 
 //on peut promise des méthode avec util.promisify()
 //exemple
@@ -26,6 +28,12 @@ const express = require('express');
 
 //Creation d'une appliccation expressJS
 const app = express();
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+app.use(bodyParser.json());
+
+
 
 const mongoose = require('mongoose');
 
@@ -40,6 +48,17 @@ app.get('/collaborateur/:id', function (req,res) {
     CollaborateurCtrl.findOne(req,res);
 });
 
+app.post('/collaborateur', function (req,res) {
+    CollaborateurCtrl.create(req,res);
+});
+
+app.put('/collaborateur/:id', function(req,res){
+    CollaborateurCtrl.update(req,res);
+});
+
+app.delete('/collaborateur/:id', function(req,res){
+    CollaborateurCtrl.remove(req,res);
+});
 
 // ou
 /*
