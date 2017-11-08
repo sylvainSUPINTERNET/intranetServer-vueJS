@@ -14,6 +14,8 @@ const util = require('util');
 const bodyParser = require('body-parser');
 
 
+
+
 //on peut promise des méthode avec util.promisify()
 //exemple
 //const readFile = util.promisify(fs.readFile) //on peut promissiy tous
@@ -34,6 +36,27 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
+//config header
+app.use(function (req,res,next) {
+    //on intranet (client) else *
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    next();
+});
+
+
+//config via express (creer des clef)
+app.set('ip', 'localhost');
+app.set('port', 1337);
+
+app.set('db_name', 'intranet');
 
 const mongoose = require('mongoose');
 
@@ -68,11 +91,8 @@ app.delete('/collaborateur/:id', function(req,res){
 
 
 
-//config via express (creer des clef)
-app.set('ip', 'localhost');
-app.set('port', 1337);
 
-app.set('db_name', 'intranet');
+
 
 // demare la db au dermarage du server
 //indique a mongoose qu'on utilise les promesses à utiliser sont celle par défaut dans Node.js(objet global)
